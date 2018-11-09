@@ -1,7 +1,5 @@
 # Docker Hub Monitoring
 
-This is a Training repository for Rob. Jay Vyas assigned a monitoring project to Rob.
-
 This repository contains code for monitoring the number of Hubs that are online and available. 
 
 This contains:
