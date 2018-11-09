@@ -1,0 +1,2 @@
+#!/bin/bash
+docker build -t metriccollector ./ && docker run -p 8080:8080 -v /Users/robertp/.kube:/root/.kube -v /Users/robertp/.minikube:/Users/robertp/.minikube -it metriccollector python HTTPServer.py --insecure

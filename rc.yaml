@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: demo
+spec:
+  replicas: 1
+  selector:
+    app: demo
+  template:
+    metadata:
+      name: demo
+      labels:
+        app: demo
+    spec:
+      containers:
+      - name: metriccollector
+        image: metriccollector
+        imagePullPolicy: Never
+        command: ['python']
+        args: ['HTTPServer.py','--insecure']
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /root/.kube
+          name: kubernetes-vol
+        - mountPath: /Users/robertp/.minikube
+          name: minikube-vol
+      - name: prometheus
+        image: prom/prometheus
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        - mountPath: /etc/prometheus
+          name: prometheus-vol
+      volumes:
+      - name: prometheus-vol
+        hostPath:
+          path: /Users/robertp/projects/bitbucket/docker_pythonmonitoring/src/etc/prometheus
+      - name: kubernetes-vol
+        hostPath:
+          path: /Users/robertp/.kube
+      - name: minikube-vol
+        hostPath:
+          path: /Users/robertp/.minikube
+
